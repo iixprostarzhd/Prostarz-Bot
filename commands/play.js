@@ -21,7 +21,7 @@ module.exports.run = async (bot, message, args) => {
 
   const songInfo = await ytdl.getInfo(args[0]);
   const song = {
-    title: Util.escapeMarkDown(songInfo.title),
+    title: Util.escapeMarkdown(songInfo.title),
     url: songInfo.video_url
   };
 
