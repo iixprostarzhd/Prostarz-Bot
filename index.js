@@ -2,8 +2,7 @@
 const botConfig = require("./botConfig.json");
 const tokenFile = require("./token.json");
 const {
-  Discord,
-  Util
+  Discord
 } = require("discord.js");
 const fs = require("fs");
 const YouTube = require("simple-youtube-api");
