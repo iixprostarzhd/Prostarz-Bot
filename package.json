@@ -1,0 +1,19 @@
+{
+  "name": "prostarz-bot",
+  "version": "1.0.0",
+  "description": "A bot made by prostarz",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "prostarz",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.3.2",
+    "fortnite": "^3.0.0",
+    "node-opus": "^0.2.7",
+    "snekfetch": "^3.6.4",
+    "superagent": "^3.8.2",
+    "ytdl-core": "^0.20.2"
+  }
+}
