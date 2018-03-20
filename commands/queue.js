@@ -18,6 +18,7 @@ ${serverQueue.songs.map(song => `**-** ${song.title}`).join('\n')}
 
 **Now playing:** ${serverQueue.songs[0].title}
   		`);
+  return message.channel.send("``` __**Song queue:**__ \n" + serverQueue.songs.map(song => `**-** ${song.title}`).join('\n') + " **Now playing:** \n" + serverQueue.songs[0].title + "```");
 
 }
 
