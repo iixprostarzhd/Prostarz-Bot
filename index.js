@@ -72,8 +72,7 @@ bot.on("message", async message => {
 });
 
 module.exports.handleVideo = async function handleVideo(video, message, voiceChannel) {
-  const serverQueue = queue.get(message.guild.id);
-  console.log(video);
+  const serverQueue = queue.get(message.guild.id);;
   const song = {
     id: video.id,
     title: Util.escapeMarkdown(video.title),
