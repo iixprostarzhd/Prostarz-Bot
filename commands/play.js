@@ -41,7 +41,7 @@ module.exports.run = async (bot, message, args) => {
       }
     }
 
-    //TODO: refactor
+    return index.handleVideo(video, message, voiceChannel);
   }
 }
 
