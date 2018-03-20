@@ -1,4 +1,7 @@
-const Discord = require("discord.js");
+const {
+  Discord,
+  Util
+} = require("discord.js");
 const token = require("../token.json");
 const index = require("../index.js");
 const ytdl = require("ytdl-core");
@@ -10,7 +13,7 @@ module.exports.run = async (bot, message, args) => {
   const queue = index.queue;
   const serverQueue = index.serverQueue;
 
-  if (!voiceChannel) return message.channel.send("You are not in a voice channel please joib a channel and use this command again");
+  if (!voiceChannel) return message.channel.send("You are not in a voice channel please join a channel and use this command again");
 
   const permissions = voiceChannel.permissionsFor(message.client.user);
   if (!permissions.has('CONNECT')) return message.channel.send("I do not have the permissions to join that voice channel pleae give me permissions to join");
@@ -18,7 +21,7 @@ module.exports.run = async (bot, message, args) => {
 
   const songInfo = await ytdl.getInfo(args[0]);
   const song = {
-    title: songInfo.title,
+    title: Util.escapeMarkDown(songInfo.title),
     url: songInfo.video_url
   };
 

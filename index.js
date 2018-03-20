@@ -82,6 +82,7 @@ module.exports.play = function play(guild, song) {
 
   dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 
+  serverQueue.textChannel.send(`Started playing: **${song.title}**`);
 }
 
 bot.login(tokenFile.token);
