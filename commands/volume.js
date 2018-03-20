@@ -14,9 +14,11 @@ module.exports.run = async (bot, message, args) => {
   if (!serverQueue) return message.channel.send("There is nothing playing to change the volume on");
 
   if (!args[0]) return message.channel.send(`the current volume is: **${serverQueue.volume}**`);
+  if (args[0] > 10) return message.channel.send(`sorry cant set the volume above 10`);
+
   serverQueue.volume = args[0];
   serverQueue.connection.dispatcher.setVolumeLogarithmic(args[0] / 5);
-  return message.channel.send(`I have set the volume to: **${serverQueue.volume}**`)
+  return message.channel.send(`I have set the volume to: **${serverQueue.volume} / 10**`)
 }
 
 module.exports.help = {
