@@ -78,7 +78,7 @@ module.exports.play = function play(guild, song) {
       serverQueue.songs.shift();
       play(guild, serverQueue.songs[0]);
     })
-    .on("error", error() => console.error(error));
+    .on("error", error => console.error(error));
 
   dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 
