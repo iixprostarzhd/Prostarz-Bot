@@ -3,6 +3,7 @@ const botConfig = require("./botConfig.json");
 const tokenFile = require("./token.json");
 const {
   Client,
+  Collection,
   Util
 } = require('discord.js');
 const fs = require("fs");
@@ -21,7 +22,7 @@ const queue = new Map();
 
 module.exports.queue = queue;
 
-bot.commands = new Client.Collection();
+bot.commands = new Collection();
 
 bot.on('ready', async () => {
   let serversOn = bot.guilds.size;
