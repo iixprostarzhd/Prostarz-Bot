@@ -85,7 +85,7 @@ module.exports.play = function play(guild, song) {
       if (reason === 'Stream is not generating quickly enough.') console.log('Song ended.');
       console.log(reason);
       serverQueue.songs.shift();
-      play(guild, serverQueue.songs[0]);
+      module.exports.play(guild, serverQueue.songs[0]);
     })
     .on("error", error => console.error(error));
 
