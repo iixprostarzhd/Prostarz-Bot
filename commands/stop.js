@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const token = require("../token.json");
+const index = require("../index.js");
 const ytdl = require("ytdl-core");
 const botConfig = require("../botConfig.json");
 
