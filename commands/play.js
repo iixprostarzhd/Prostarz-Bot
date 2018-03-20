@@ -34,7 +34,7 @@ module.exports.run = async (bot, message, args) => {
     } catch (error) {
       try {
         var videos = await youtube.searchVideos(searchTerm, 1);
-        var video = await getVideoByID(videos[0].id);
+        var video = await youtube.getVideoByID(videos[0].id);
       } catch (err) {
         console.error(err);
         return message.channel.send(`I could not find that video`);

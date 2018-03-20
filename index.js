@@ -1,7 +1,10 @@
 //Require's
 const botConfig = require("./botConfig.json");
 const tokenFile = require("./token.json");
-const Discord = require("discord.js");
+const {
+  Discord,
+  Util
+} = require("discord.js");
 const fs = require("fs");
 const YouTube = require("simple-youtube-api");
 const ytdl = require("ytdl-core");
