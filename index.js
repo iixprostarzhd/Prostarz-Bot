@@ -11,7 +11,7 @@ const bot = new Discord.Client({
   disableEveryone: true
 });
 
-const youtube = new YouTube(token.youtube);
+const youtube = new YouTube(tokenFile.youtube);
 module.exports.youtube = youtube;
 
 const queue = new Map();
