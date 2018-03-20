@@ -14,7 +14,7 @@ module.exports.run = async (bot, message, args) => {
   const serverQueue = index.serverQueue;
   const youtube = index.youtube;
   const searchTerm = args.slice(0).join(" ");
-  const url = args[0] ? args[0].replace(/<.+>/g, '$1');
+  const url = args[0] ? args[0].replace(/<(.+)>/g, '$1') : '';
 
   if (!voiceChannel) return message.channel.send("You are not in a voice channel please join a channel and use this command again");
 
