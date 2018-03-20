@@ -21,7 +21,7 @@ const queue = new Map();
 
 module.exports.queue = queue;
 
-bot.commands = new Discord.Collection();
+bot.commands = new Client.Collection();
 
 bot.on('ready', async () => {
   let serversOn = bot.guilds.size;
