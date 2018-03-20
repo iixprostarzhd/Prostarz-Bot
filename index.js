@@ -16,7 +16,6 @@ const bot = new Client({
 });
 
 const youtube = new YouTube(tokenFile.youtube);
-module.exports.youtube = youtube;
 
 const queue = new Map();
 
@@ -71,8 +70,8 @@ bot.on("message", async message => {
   if (commandFile) commandFile.run(bot, message, args);
 });
 
-module.exports.handleVideo = async function handleVideo(video, message, voiceChannel) {
-  const serverQueue = queue.get(message.guild.id);;
+module.exports.handleVideo = async function handleVideo(video, message, voiceChannel, playlist = false) {
+  const serverQueue = queue.get(message.guild.id);
   const song = {
     id: video.id,
     title: Util.escapeMarkdown(video.title),
@@ -107,7 +106,6 @@ module.exports.handleVideo = async function handleVideo(video, message, voiceCha
     if (playlist) return undefined;
     else return message.channel.send(`✅ **${song.title}** has been added to the queue!`);
   }
-  return undefined;
 }
 
 function play(guild, song) {

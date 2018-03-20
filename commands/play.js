@@ -6,13 +6,14 @@ const token = require("../token.json");
 const index = require("../index.js");
 const ytdl = require("ytdl-core");
 const botConfig = require("../botConfig.json");
+const YouTube = require("simple-youtube-api");
 
 module.exports.run = async (bot, message, args) => {
   const voiceChannel = message.member.voiceChannel;
 
   const queue = index.queue;
   const serverQueue = index.serverQueue;
-  const youtube = index.youtube;
+  const youtube = new YouTube(token.youtube);
   const searchTerm = args.slice(0).join(" ");
   const url = args[0] ? args[0].replace(/<(.+)>/g, '$1') : '';
 
@@ -25,8 +26,12 @@ module.exports.run = async (bot, message, args) => {
 
   if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
     const playlist = await youtube.getPlaylist(url);
-
-    //TODO: refactor
+    const videos = await playlist.getVideos();
+    for (const video of Object.values(videos)) {
+      const video2 = await youtube.getVideoByID(video.id);
+      await index.handleVideo(video2, msg, voiceChannel, true);
+    }
+    return message.channel.send(`Playlist: **${playlist.title}** has been added to the queue!`);
   } else {
     try {
       var video = await youtube.getVideo(searchTerm);
@@ -38,8 +43,7 @@ module.exports.run = async (bot, message, args) => {
         console.error(err);
         return message.channel.send(`I could not find that video`);
       }
-    }
-
+    };
     return index.handleVideo(video, message, voiceChannel);
   }
 }
