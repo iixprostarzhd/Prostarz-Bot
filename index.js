@@ -2,7 +2,7 @@
 const botConfig = require("./botConfig.json");
 const tokenFile = require("./token.json");
 const {
-  Discord,
+  Client,
   Util
 } = require('discord.js');
 const fs = require("fs");
@@ -10,7 +10,7 @@ const YouTube = require("simple-youtube-api");
 const ytdl = require("ytdl-core");
 
 //Set bot
-const bot = new Discord({
+const bot = new Client({
   disableEveryone: true
 });
 
