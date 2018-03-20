@@ -26,15 +26,15 @@ module.exports.run = async (bot, message, args) => {
       playing: true
     };
     queue.set(message.guild.id, queueConstruct);
+
     try {
       var connection = await voiceChannel.join();
     } catch (error) {
       console.log(`Could not join the voice channel: ${error}`);
     }
+  } else {
 
   }
-
-
 
   const dispatcher = connection.playStream(ytdl(args[0]))
     .on('end', () => {
