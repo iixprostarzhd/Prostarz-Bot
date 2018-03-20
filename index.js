@@ -71,31 +71,9 @@ bot.on("message", async message => {
   if (commandFile) commandFile.run(bot, message, args);
 });
 
-function play(guild, song) {
-  const serverQueue = queue.get(guild.id);
-
-  if (!song) {
-    serverQueue.voiceChannel.leave();
-    queue.delete(guild.id);
-    return;
-  }
-
-  const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
-    .on("end", reason => {
-      if (reason === 'Stream is not generating quickly enough.') console.log('Song ended.');
-      console.log(reason);
-      serverQueue.songs.shift();
-      play(message.guild, serverQueue.songs[0]);
-    })
-    .on("error", error => console.error(error));
-
-  dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-
-  serverQueue.textChannel.send(`Started playing: **${song.title}**`);
-}
-
 module.exports.handleVideo = async function handleVideo(video, message, voiceChannel) {
   const serverQueue = queue.get(message.guild.id);
+  console.log(video);
   const song = {
     id: video.id,
     title: Util.escapeMarkdown(video.title),
@@ -120,13 +98,40 @@ module.exports.handleVideo = async function handleVideo(video, message, voiceCha
       queueConstruct.connection = connection;
       play(message.guild, queueConstruct.songs[0]);
     } catch (error) {
-      console.log(`Could not join the voice channel: ${error}`);
+      console.error(`I could not join the voice channel: ${error}`);
       queue.delete(message.guild.id);
+      return message.channel.send(`I could not join the voice channel: ${error}`);
     }
   } else {
     serverQueue.songs.push(song);
-    return message.channel.send(`**${song.title}** has been added to the queue!`);
-  };
+    console.log(serverQueue.songs);
+    if (playlist) return undefined;
+    else return message.channel.send(`✅ **${song.title}** has been added to the queue!`);
+  }
+  return undefined;
+}
+
+function play(guild, song) {
+  const serverQueue = queue.get(guild.id);
+
+  if (!song) {
+    serverQueue.voiceChannel.leave();
+    queue.delete(guild.id);
+    return;
+  }
+
+  const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
+    .on("end", reason => {
+      if (reason === 'Stream is not generating quickly enough.') console.log('Song ended.');
+      console.log(reason);
+      serverQueue.songs.shift();
+      play(message.guild, serverQueue.songs[0]);
+    })
+    .on("error", error => console.error(error));
+
+  dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+
+  message.channel.send(`Started playing: **${song.title}**`);
 }
 
 bot.login(tokenFile.token);
