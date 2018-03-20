@@ -3,6 +3,7 @@ const botConfig = require("./botConfig.json");
 const tokenFile = require("./token.json");
 const Discord = require("discord.js");
 const fs = require("fs");
+const ytdl = require("ytdl-core");
 
 //Set bot
 const bot = new Discord.Client({
@@ -62,5 +63,25 @@ bot.on("message", async message => {
   if (commandFile) commandFile.run(bot, message, args);
 });
 
+module.exports.play = function play(guild, song) {
+  const serverQueue = queue.get(guild.id);
+
+  if (!song) {
+    serverQueue.voiceChannel.leave();
+    queue.delete(guild.id);
+    return;
+  }
+
+  const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
+    .on("end", () => {
+      console.log("Song ended!");
+      serverQueue.songs.shift();
+      play(guild, serverQueue.songs[0]);
+    })
+    .on("error", error() => console.error(error));
+
+  dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+
+}
 
 bot.login(tokenFile.token);

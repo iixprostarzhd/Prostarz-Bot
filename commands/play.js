@@ -16,6 +16,12 @@ module.exports.run = async (bot, message, args) => {
   if (!permissions.has('CONNECT')) return message.channel.send("I do not have the permissions to join that voice channel pleae give me permissions to join");
   if (!permissions.has("SPEAK")) return message.channel.send("I do not have the permissions to speak in that voice channel pleae give me permissions to join");
 
+  const songInfo = await ytdl.getInfo(args[0]);
+  const song = {
+    title: songInfo.title,
+    url: songInfo.video_url
+  };
+
   if (!serverQueue) {
     const queueConstruct = {
       textChannel: message.channel,
@@ -27,26 +33,20 @@ module.exports.run = async (bot, message, args) => {
     };
     queue.set(message.guild.id, queueConstruct);
 
+    queueConstruct.songs.push(song);
+
     try {
       var connection = await voiceChannel.join();
+      queueConstruct.connection = connection;
+      index.play(message.guild, queueConstruct.songs[0]);
     } catch (error) {
       console.log(`Could not join the voice channel: ${error}`);
+      queue.delete(message.guild.id);
     }
   } else {
-
-  }
-
-  const dispatcher = connection.playStream(ytdl(args[0]))
-    .on('end', () => {
-      console.log('song ended!');
-      voiceChannel.leave();
-    })
-    .on('error', error => {
-      console.error(error);
-    });
-
-  dispatcher.setVolumeLogarithmic(5 / 5);
-
+    serverQueue.songs.push(song);
+    return message.channel.send(`**${song.title}** has been added to the queue!`);
+  };
 }
 
 module.exports.help = {
