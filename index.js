@@ -71,7 +71,7 @@ bot.on("message", async message => {
   if (commandFile) commandFile.run(bot, message, args);
 });
 
-module.exports.play = function play(guild, song) {
+function play(guild, song) {
   const serverQueue = queue.get(guild.id);
 
   if (!song) {
@@ -85,7 +85,7 @@ module.exports.play = function play(guild, song) {
       if (reason === 'Stream is not generating quickly enough.') console.log('Song ended.');
       console.log(reason);
       serverQueue.songs.shift();
-      module.exports.play(message.guild, serverQueue.songs[0]);
+      play(message.guild, serverQueue.songs[0]);
     })
     .on("error", error => console.error(error));
 
