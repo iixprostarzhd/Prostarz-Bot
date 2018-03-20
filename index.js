@@ -3,12 +3,16 @@ const botConfig = require("./botConfig.json");
 const tokenFile = require("./token.json");
 const Discord = require("discord.js");
 const fs = require("fs");
+const YouTube = require("simple-youtube-api");
 const ytdl = require("ytdl-core");
 
 //Set bot
 const bot = new Discord.Client({
   disableEveryone: true
 });
+
+const youtube = new YouTube(token.youtube);
+module.exports.youtube = youtube;
 
 const queue = new Map();
 
@@ -73,8 +77,9 @@ module.exports.play = function play(guild, song) {
   }
 
   const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
-    .on("end", () => {
-      console.log("Song ended!");
+    .on("end", reason => {
+      if (reason === 'Stream is not generating quickly enough.') console.log('Song ended.');
+      console.log(reason);
       serverQueue.songs.shift();
       play(guild, serverQueue.songs[0]);
     })
@@ -83,6 +88,41 @@ module.exports.play = function play(guild, song) {
   dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 
   serverQueue.textChannel.send(`Started playing: **${song.title}**`);
+}
+
+module.exports.handleVideo = async function handleVideo(video, message, voiceChannel) {
+  const serverQueue = queue.get(message.guild.id);
+  const song = {
+    id: video.id,
+    title: Util.escapeMarkdown(video.title),
+    url: `https://www.youtube.com/watch?v=${video.id}`
+  };
+
+  if (!serverQueue) {
+    const queueConstruct = {
+      textChannel: message.channel,
+      voiceChannel: voiceChannel,
+      connection: null,
+      songs: [],
+      volume: 5,
+      playing: true
+    };
+    queue.set(message.guild.id, queueConstruct);
+
+    queueConstruct.songs.push(song);
+
+    try {
+      var connection = await voiceChannel.join();
+      queueConstruct.connection = connection;
+      play(message.guild, queueConstruct.songs[0]);
+    } catch (error) {
+      console.log(`Could not join the voice channel: ${error}`);
+      queue.delete(message.guild.id);
+    }
+  } else {
+    serverQueue.songs.push(song);
+    return message.channel.send(`**${song.title}** has been added to the queue!`);
+  };
 }
 
 bot.login(tokenFile.token);

@@ -12,6 +12,9 @@ module.exports.run = async (bot, message, args) => {
 
   const queue = index.queue;
   const serverQueue = index.serverQueue;
+  const youtube = index.youtube;
+  const searchTerm = args.slice(0).join(" ");
+  const url = args[0] ? args[0].replace(/<.+>/g, '$1');
 
   if (!voiceChannel) return message.channel.send("You are not in a voice channel please join a channel and use this command again");
 
@@ -19,37 +22,27 @@ module.exports.run = async (bot, message, args) => {
   if (!permissions.has('CONNECT')) return message.channel.send("I do not have the permissions to join that voice channel pleae give me permissions to join");
   if (!permissions.has("SPEAK")) return message.channel.send("I do not have the permissions to speak in that voice channel pleae give me permissions to join");
 
-  const songInfo = await ytdl.getInfo(args[0]);
-  const song = {
-    title: Util.escapeMarkdown(songInfo.title),
-    url: songInfo.video_url
-  };
 
-  if (!serverQueue) {
-    const queueConstruct = {
-      textChannel: message.channel,
-      voiceChannel: voiceChannel,
-      connection: null,
-      songs: [],
-      volume: 5,
-      playing: true
-    };
-    queue.set(message.guild.id, queueConstruct);
 
-    queueConstruct.songs.push(song);
+  if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
+    const playlist = await youtube.getPlaylist(url);
 
-    try {
-      var connection = await voiceChannel.join();
-      queueConstruct.connection = connection;
-      index.play(message.guild, queueConstruct.songs[0]);
-    } catch (error) {
-      console.log(`Could not join the voice channel: ${error}`);
-      queue.delete(message.guild.id);
-    }
+    //TODO: refactor
   } else {
-    serverQueue.songs.push(song);
-    return message.channel.send(`**${song.title}** has been added to the queue!`);
-  };
+    try {
+      var video = await youtube.getVideo(searchTerm);
+    } catch (error) {
+      try {
+        var videos = await youtube.searchVideos(searchTerm, 1);
+        var video = await.getVideoByID(videos[0].id);
+      } catch (err) {
+        console.error(err);
+        return message.channel.send(`I could not find that video`);
+      }
+    }
+
+    //TODO: refactor
+  }
 }
 
 module.exports.help = {

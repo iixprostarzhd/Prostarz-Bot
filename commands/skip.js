@@ -13,7 +13,7 @@ module.exports.run = async (bot, message, args) => {
   if (!voiceChannel) return message.channel.send("You are not in a voice channel please joib a channel and use this command again");
 
   if (!serverQueue) return message.channel.send("There is nothing in the queue to skip");
-  serverQueue.connection.dispatcher.end();
+  serverQueue.connection.dispatcher.end('skip command has been used');
 }
 
 module.exports.help = {

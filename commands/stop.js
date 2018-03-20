@@ -14,7 +14,7 @@ module.exports.run = async (bot, message, args) => {
 
   if (!serverQueue) return message.channel.send("There is nothing in the queue to stop playing");
   serverQueue.song = [];
-  serverQueue.connection.dispatcher.end();
+  serverQueue.connection.dispatcher.end('stop command has been used');
 
 }
 
