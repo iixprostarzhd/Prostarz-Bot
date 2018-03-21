@@ -18,7 +18,7 @@ module.exports.run = async (bot, message, args) => {
 
   let npEmbed = new Discord.RichEmbed()
     .setTitle(videoID.raw.snippet.channelTitle)
-    .setColor(botConfig.yellow)
+    .setColor(botConfig.emerald)
     .setThumbnail(videoID.thumbnails.maxres.url)
     .addField("TITLE", videoID.title)
     .addField("DESCRIPTION", videoID.raw.snippet.description)
