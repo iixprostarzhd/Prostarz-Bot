@@ -9,7 +9,9 @@ const botConfig = require("../botConfig.json");
 const YouTube = require("simple-youtube-api");
 
 module.exports.run = async (bot, message, args) => {
+  const youtube = new YouTube(token.youtube);
   const voiceChannel = message.member.voiceChannel;
+
   let searchString = args.slice(0).join(" ");
   const url = args[0] ? args[0].replace(/<(.+)>/g, '$1') : '';
 
