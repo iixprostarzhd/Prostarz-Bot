@@ -11,6 +11,8 @@ const YouTube = require("simple-youtube-api");
 module.exports.run = async (bot, message, args) => {
   const voiceChannel = message.member.voiceChannel;
   let searchString = args.slice(0).join(" ");
+  const url = args[0] ? args[0].replace(/<(.+)>/g, '$1') : '';
+
   if (!voiceChannel) return message.channel.send("You are not in a voice channel please join a channel and use this command again");
 
   const permissions = voiceChannel.permissionsFor(message.client.user);
