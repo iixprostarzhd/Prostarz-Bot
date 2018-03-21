@@ -12,7 +12,7 @@ module.exports.run = async (bot, message, args) => {
 
   if (!voiceChannel) return message.channel.send("You are not in a voice channel please join a channel and use this command again");
 
-  if (serverQueue) return message.channel.send("There is still songs in the queue for me to leave please remove all songs from the queue ```*stop``` and run me again");
+  if (serverQueue) return message.channel.send("There is still songs in the queue for me to leave please remove all songs from the queue** *stop **and run me again");
 
   await voiceChannel.leave();
 
