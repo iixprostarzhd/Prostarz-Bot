@@ -21,7 +21,7 @@ module.exports.run = async (bot, message, args) => {
     .setTitle(videoID.title)
     .setColor(botConfig.yellow)
     .setThumbnail(videoID.thumbnails.high.url)
-    .addField(`[${videoID.raw.snippet.title}](https://www.youtube.com/watch?v=${serverQueue.songs[0].id})`);
+    .addField("description", videoID.raw.snippet.description);
 
   await message.channel.send(npEmbed);
 }
