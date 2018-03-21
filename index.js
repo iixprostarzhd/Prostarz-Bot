@@ -102,7 +102,6 @@ module.exports.handleVideo = async function handleVideo(video, message, voiceCha
     }
   } else {
     serverQueue.songs.push(song);
-    console.log(serverQueue.songs);
     if (playlist) return undefined;
     else return message.channel.send(`✅ **${song.title}** has been added to the queue!`);
   }
@@ -117,7 +116,6 @@ function play(guild, song) {
     queue.delete(guild.id);
     return;
   }
-  console.log(serverQueue.songs);
 
   const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
     .on('end', reason => {
