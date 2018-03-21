@@ -20,7 +20,7 @@ module.exports.run = async (bot, message, args) => {
   let npEmbed = new Discord.RichEmbed()
     .setTitle(videoID.title)
     .setColor(botConfig.yellow)
-    .setImage(file[rndMeme].url);
+    .setImage(videoID.thumbnails.high.url);
 
   await message.channel.send(npEmbed);
 }
