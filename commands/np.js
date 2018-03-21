@@ -22,8 +22,8 @@ module.exports.run = async (bot, message, args) => {
     .setColor(botConfig.yellow)
     .setThumbnail(videoID.thumbnails.maxres.url)
     .addField("title", videoID.title)
-    .addField("description", videoID.raw.snippet.description);
-  // .setFooter(videoID.raw.snippet.channelTitle);
+    .addField("description", videoID.raw.snippet.description)
+    .setFooter(videoID.raw.snippet.channelTitle);
 
   await message.channel.send(npEmbed);
 }
