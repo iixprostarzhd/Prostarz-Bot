@@ -15,6 +15,14 @@ const bot = new Client({
   disableEveryone: true
 });
 
+bot.on('warn', console.warn);
+
+bot.on('error', console.error);
+
+bot.on('disconnect', () => console.log('I just disconnected, making sure you know, I will reconnect now...'));
+
+bot.on('reconnecting', () => console.log('I am reconnecting now!'));
+
 const youtube = new YouTube(tokenFile.youtube);
 
 const queue = new Map();
