@@ -20,8 +20,8 @@ module.exports.run = async (bot, message, args) => {
   let npEmbed = new Discord.RichEmbed()
     .setTitle("Song info")
     .setColor(botConfig.yellow)
-    .setThumbnail(videoID.thumbnails.maxres.url);
-  // .addField("description", videoID.raw.snippet.description)
+    .setThumbnail(videoID.thumbnails.maxres.url)
+    .addField("description", videoID.raw.snippet.description);
   // .setFooter(videoID.raw.snippet.channelTitle);
 
   await message.channel.send(npEmbed);
