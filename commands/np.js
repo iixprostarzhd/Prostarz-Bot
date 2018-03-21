@@ -3,6 +3,7 @@ const token = require("../token.json");
 const index = require("../index.js");
 const ytdl = require("ytdl-core");
 const botConfig = require("../botConfig.json");
+const YouTube = require("simple-youtube-api");
 
 module.exports.run = async (bot, message, args) => {
   const youtube = new YouTube(token.youtube);
