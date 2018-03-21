@@ -21,7 +21,7 @@ module.exports.run = async (bot, message, args) => {
   if (!permissions.has('CONNECT')) return message.channel.send("I do not have the permissions to join that voice channel pleae give me permissions to join");
   if (!permissions.has("SPEAK")) return message.channel.send("I do not have the permissions to speak in that voice channel pleae give me permissions to join");
 
-  if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist?list=(.*)$/)) {
+  if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
     const playlist = await youtube.getPlaylist(url);
     const videos = await playlist.getVideos();
     for (const video of Object.values(videos)) {
