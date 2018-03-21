@@ -15,7 +15,6 @@ module.exports.run = async (bot, message, args) => {
   if (!serverQueue) return message.channel.send("There is nothing playing");
 
   const videoID = await youtube.getVideoByID(serverQueue.songs[0].id);
-  console.log(videoID);
 
   let thumbNail = videoID.thumbnails.standard.url;
   if (videoID.thumbnails.maxres) {
