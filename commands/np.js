@@ -16,10 +16,15 @@ module.exports.run = async (bot, message, args) => {
 
   const videoID = await youtube.getVideoByID(serverQueue.songs[0].id);
 
+  let thumbNail = videoID.thumbnails.maxres.url;
+  if (!videoID.thumbnails.maxres.url) {
+    thumbNail = videoID.thumbnails.default.url
+  }
+
   let npEmbed = new Discord.RichEmbed()
     .setTitle(`**🎶 -** ${videoID.title}`)
     .setColor(botConfig.emerald)
-    .setThumbnail(videoID.thumbnails.maxres.url)
+    .setThumbnail(thumbNail)
     .addField("DESCRIPTION", videoID.raw.snippet.description)
     .setFooter(message.createdAt, message.author.avatarURL);
 
