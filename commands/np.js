@@ -5,6 +5,7 @@ const ytdl = require("ytdl-core");
 const botConfig = require("../botConfig.json");
 
 module.exports.run = async (bot, message, args) => {
+  const youtube = new YouTube(token.youtube);
   const voiceChannel = message.member.voiceChannel;
 
   const queue = index.queue;
@@ -12,6 +13,8 @@ module.exports.run = async (bot, message, args) => {
 
   if (!serverQueue) return message.channel.send("There is nothing playing");
 
+  const videoID = youtube.videoById(`https://www.youtube.com/watch?v=${serverQueue.songs[0].id}`);
+  console.log(videoID);
   return message.channel.send(`Now playing: **${serverQueue.songs[0].title}**`);
 }
 
