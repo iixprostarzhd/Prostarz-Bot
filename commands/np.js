@@ -17,7 +17,7 @@ module.exports.run = async (bot, message, args) => {
   const videoID = await youtube.getVideoByID(serverQueue.songs[0].id);
 
   let npEmbed = new Discord.RichEmbed()
-    .setTitle("**🎶 -** " + videoID.title)
+    .setTitle(`**🎶 -** ${videoID.title}`)
     .setColor(botConfig.emerald)
     .setThumbnail(videoID.thumbnails.maxres.url)
     .addField("DESCRIPTION", videoID.raw.snippet.description)
