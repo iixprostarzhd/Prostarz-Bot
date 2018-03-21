@@ -12,7 +12,6 @@ module.exports.run = async (bot, message, args) => {
   const serverQueue = index.serverQueue;
 
   if (!voiceChannel) return message.channel.send("You are not in a voice channel please join a channel and use this command again");
-  if (voiceChannelBot) return message.channel.send("I am already in a voice channel LUL");
 
   await voiceChannel.join();
 
