@@ -15,8 +15,14 @@ module.exports.run = async (bot, message, args) => {
   if (!serverQueue) return message.channel.send("There is nothing playing");
 
   const videoID = await youtube.getVideoByID(serverQueue.songs[0].id);
-  console.log(videoID.thumbnails);
-  return message.channel.send(`Now playing: **${serverQueue.songs[0].title}**`);
+  console.log(videoID);
+
+  let npEmbed = new Discord.RichEmbed()
+    .setTitle(videoID.title)
+    .setColor(botConfig.yellow)
+    .setImage(file[rndMeme].url);
+
+  await message.channel.send(npEmbed);
 }
 
 module.exports.help = {
