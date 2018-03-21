@@ -13,8 +13,8 @@ module.exports.run = async (bot, message, args) => {
   if (!voiceChannel) return message.channel.send("You are not in a voice channel please joib a channel and use this command again");
 
   if (!serverQueue) return message.channel.send("There is nothing in the queue to stop playing");
-  serverQueue.song = [];
-  serverQueue.connection.dispatcher.end('stop command has been used');
+  serverQueue.songs = [];
+  serverQueue.connection.dispatcher.end('Stop command has been used!');
 
 }
 
