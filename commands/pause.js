@@ -10,7 +10,7 @@ module.exports.run = async (bot, message, args) => {
   const queue = index.queue;
   const serverQueue = index.serverQueue;
 
-  if (!voiceChannel) return message.channel.send("You are not in a voice channel please joib a channel and use this command again");
+  if (!voiceChannel) return message.channel.send("You are not in a voice channel please join a channel and use this command again");
 
   if (!serverQueue) return message.channel.send("There is nothing in the queue to pause");
 
