@@ -21,7 +21,7 @@ module.exports.run = async (bot, message, args) => {
     .setTitle("Song info")
     .setColor(botConfig.yellow)
     .setThumbnail(videoID.thumbnails.maxres.url)
-    .addField(videoID.raw.snippet.title)
+    .addField(videoID.title)
     .addField("description", videoID.raw.snippet.description);
   // .setFooter(videoID.raw.snippet.channelTitle);
 
