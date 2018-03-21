@@ -15,17 +15,14 @@ module.exports.run = async (bot, message, args) => {
   if (!serverQueue) return message.channel.send("There is nothing playing");
 
   const videoID = await youtube.getVideoByID(serverQueue.songs[0].id);
-  const channelID = await youtube.getChannelByID(videoID.raw.snippet.channelId);
   console.log(videoID);
-  console.log(channelID);
 
   let npEmbed = new Discord.RichEmbed()
     .setTitle("Song info")
     .setColor(botConfig.yellow)
-    .setThumbnail(videoID.thumbnails.maxres.url)
-    .addField(videoID.title)
-    .addField("description", videoID.raw.snippet.description)
-    .setFooter(videoID.raw.snippet.channelTitle);
+    .setThumbnail(videoID.thumbnails.maxres.url);
+  // .addField("description", videoID.raw.snippet.description)
+  // .setFooter(videoID.raw.snippet.channelTitle);
 
   await message.channel.send(npEmbed);
 }
