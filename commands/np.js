@@ -18,7 +18,7 @@ module.exports.run = async (bot, message, args) => {
   console.log(videoID);
 
   let thumbNail = videoID.thumbnails.maxres.url;
-  if (!videoID.thumbnails.maxres.url) {
+  if (!videoID.thumbnails.maxres) {
     thumbNail = videoID.thumbnails.default.url
   }
 
