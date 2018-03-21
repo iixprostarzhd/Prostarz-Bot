@@ -15,13 +15,15 @@ module.exports.run = async (bot, message, args) => {
   if (!serverQueue) return message.channel.send("There is nothing in the queue to skip");
 
   if (!serverQueue.connection.dispatcher.paused) {
-    message.channel.send("**⏸ -** I have paused the song for you");
-    return serverQueue.connection.dispatcher.pause()
+    serverQueue.playing = false;
+    serverQueue.connection.dispatcher.pause();
+    return message.channel.send("**⏸ -** I have paused the song for you");
   };
 
   if (serverQueue.connection.dispatcher.paused) {
-    message.channel.send("**▶️ -** I have resumed the song for you");
-    return serverQueue.connection.dispatcher.resume()
+    serverQueue.playing = true;
+    serverQueue.connection.dispatcher.resume();
+    return message.channel.send("**▶️ -** I have resumed the song for you");
   };
 }
 
