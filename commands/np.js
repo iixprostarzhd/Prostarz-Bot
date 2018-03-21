@@ -17,9 +17,9 @@ module.exports.run = async (bot, message, args) => {
   const videoID = await youtube.getVideoByID(serverQueue.songs[0].id);
   console.log(videoID);
 
-  let thumbNail = videoID.thumbnails.maxres.url;
-  if (!videoID.thumbnails.maxres) {
-    thumbNail = videoID.thumbnails.default.url
+  let thumbNail = videoID.thumbnails.standard.url;
+  if (videoID.thumbnails.maxres) {
+    thumbNail = videoID.thumbnails.maxres.url;
   }
 
   let npEmbed = new Discord.RichEmbed()
