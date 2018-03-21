@@ -20,7 +20,8 @@ module.exports.run = async (bot, message, args) => {
   let npEmbed = new Discord.RichEmbed()
     .setTitle(videoID.title)
     .setColor(botConfig.yellow)
-    .setImage(videoID.thumbnails.high.url);
+    .setThumbnail(videoID.thumbnails.high.url)
+    .addField(`[${videoID.kind.snippet.title}](https://www.youtube.com/watch?v=${serverQueue.songs[0].id})`);
 
   await message.channel.send(npEmbed);
 }
